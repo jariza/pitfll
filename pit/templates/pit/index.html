@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load keyvalue %}
+
+{% block title %}PIT{% endblock %}
+
+{% block imports %}
+{% endblock imports %}
+
+{% block content %}
+
+<h1>Control de reservas de PIT</h1>
+<form action="{% url 'pit:actualizarhorario' %}" method="post">
+    <p><label for="mesa">Mesa</label>:<br />
+        <select id="mesa" name="mesa">
+        {% for mesa in datos.mesas %}
+        <option value="{{ mesa.id }}">{{ mesa.nombre }}</option>
+        {% endfor %}
+    </select></p>
+    <p><label for="slot">Slot</label>:<br />
+        <select id="slot" name="slot">
+        {% for slot in datos.slots %}
+        <option value="{{ slot.id }}">{{ slot.horainicio|date:'H:i' }}-{{ slot.horafin|date:'H:i' }}</option>
+        {% endfor %}
+    </select></p>
+    <p><label for="equipo">Equipo</label>:<br />
+        <select id="equipo" name="equipo">
+        <option value="-1" selected>Liberar</option>
+        {% for equipo in datos.equipos %}
+        <option value="{{ equipo.id }}">{{ equipo.idequipo }} - {{ equipo.nombre }}</option>
+        {% endfor %}
+    </select></p>
+    {% csrf_token %}
+    <p><input type="submit" value="Actualizar"></p>
+</form>
+
+<p>Enlaces a horarios públicos:</p>
+<ul>
+    <li><a href="horario/0/">Todas las mesas</a></li>
+{% for sala in datos.salas %}
+    <li><a href="horario/{{ sala.id }}/">{{ sala.nombre }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock content %}

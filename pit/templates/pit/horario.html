@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load keyvalue %}
+
+{% block title %}PIT{% endblock %}
+
+{% block imports %}
+{% endblock imports %}
+
+{% block content %}
+
+<h1>Reservas PIT</h1>
+<table>
+    <tr><th></th>{% for mesa in mesas %}<th>{{ mesa.nombre }}</th>{% endfor %}</tr>
+    {% for slot in slots %}
+    <tr>
+        <th>{{ slot }}</th>
+        {% for mesa in mesas %}<th>{{ reservas|keyvalue:slot.id|keyvalue:mesa.id }}</th>{% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock content %}

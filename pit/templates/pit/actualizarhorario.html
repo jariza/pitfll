@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load keyvalue %}
+
+{% block title %}PIT{% endblock %}
+
+{% block imports %}
+{% endblock imports %}
+
+{% block content %}
+
+<h1>Control de reservas de PIT - Confirmación</h1>
+<form action="{% url 'pit:confirmarhorario' %}" method="post">
+    <input type="hidden" name="slot" value="{{ slot }}">
+    <input type="hidden" name="mesa" value="{{ mesa }}">
+    <input type="hidden" name="equipo" value="{{ equipo }}">
+    <p>{{ mensaje }}</p>
+    <p>¿Estás seguro?</p>
+    {% csrf_token %}
+    <input type="submit" value="Si">
+    <button id="bno" type="button" value="No" onClick="window.location.href='/pit/';">No</button></p>
+</form>
+
+{% endblock content %}
