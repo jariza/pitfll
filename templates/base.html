@@ -4,12 +4,13 @@
   <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>{% block title %}FLL{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  {% block metas %}{% endblock %}
   {% block imports %}{% endblock %}
 </head>
 <body>
 
 {% if user.is_authenticated or 'horario' in request.path %}
-{% if user.is_authenticated %}<p><a href="{% url 'logout' %}">Log Out</a></p>{% endif %}
+{% if 'horario' not in request.path %}<p><a href="{% url 'logout' %}">Log Out</a></p>{% endif %}
 {% if messages %}
     {% for message in messages %}
     <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>

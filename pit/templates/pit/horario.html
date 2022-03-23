@@ -3,20 +3,24 @@
 
 {% block title %}PIT{% endblock %}
 
-{% block imports %}
-{% endblock imports %}
+{% block metas %}
+    <meta http-equiv="refresh" content="5">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+{% endblock metas %}
 
 {% block content %}
 
-<h1>Reservas PIT</h1>
-<table>
-    <tr><th></th>{% for mesa in mesas %}<th>{{ mesa.nombre }}</th>{% endfor %}</tr>
+<h1 class="horariopit">Reservas PIT</h1>
+<table class="horariopit">
+    <tr><th style="width: 10%"></th>{% for mesa in mesas %}<th style="width: {{ anchocol }}%">{{ mesa.nombre }}</th>{% endfor %}</tr>
     {% for slot in slots %}
     <tr>
-        <th>{{ slot }}</th>
-        {% for mesa in mesas %}<th>{{ reservas|keyvalue:slot.id|keyvalue:mesa.id }}</th>{% endfor %}
+        <td style="width: 10%">{{ slot }}</td>
+        {% for mesa in mesas %}<td style="width: {{ anchocol }}%">{{ reservas|keyvalue:slot.id|keyvalue:mesa.id }}</td>{% endfor %}
     </tr>
     {% endfor %}
 </table>
-
+<p class="fechahorasrv">Actualizado a {{ fechahoraactual|date:"G:i:s, j/n/Y" }}</p>
 {% endblock content %}

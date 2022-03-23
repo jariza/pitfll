@@ -24,7 +24,7 @@
     </select></p>
     <p><label for="equipo">Equipo</label>:<br />
         <select id="equipo" name="equipo">
-        <option value="-1" selected>Liberar</option>
+        <option value="-1" selected>Liberar slot</option>
         {% for equipo in datos.equipos %}
         <option value="{{ equipo.id }}">{{ equipo.idequipo }} - {{ equipo.nombre }}</option>
         {% endfor %}

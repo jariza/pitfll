@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
+from django.views.decorators.cache import never_cache
 from .models import Equipo, Mesa, Slot, Reserva, Sala
 
 class IndexView(generic.ListView):
@@ -26,6 +27,7 @@ class IndexView(generic.ListView):
             'fechahoraservidor': datetime.now()
         }
 
+@never_cache
 def horario(request, sala):
     template = loader.get_template('pit/horario.html')
 
@@ -34,6 +36,8 @@ def horario(request, sala):
     # Reservas es (slot, mesa): equipo
     reservas = dict()
 
+    slots = Slot.objects.all().order_by("horainicio")
+
     if salaobj.exists():
         reservaobj = Reserva.objects.filter(mesa__sala=salaobj.first())
         for i in reservaobj:
@@ -41,10 +45,14 @@ def horario(request, sala):
                 reservas[i.slot.id] = dict()
             reservas[i.slot.id][i.mesa.id] = i.equipo
 
+        mesas = Mesa.objects.filter(sala=salaobj.first()).order_by("nombre")
+
         context = {
             'mesas': Mesa.objects.filter(sala=salaobj.first()).order_by("nombre"),
             'slots': Slot.objects.all().order_by("horainicio"),
-            'reservas': reservas
+            'reservas': reservas,
+            'fechahoraactual': datetime.now(),
+            'anchocol': 90/len(mesas)
         }
     else:
         reservaobj = Reserva.objects.all()
@@ -53,10 +61,14 @@ def horario(request, sala):
                 reservas[i.slot.id] = dict()
             reservas[i.slot.id][i.mesa.id] = i.equipo
 
+        mesas = Mesa.objects.all().order_by("nombre")
+
         context = {
-            'mesas': Mesa.objects.all().order_by("nombre"),
+            'mesas': mesas,
             'slots': Slot.objects.all().order_by("horainicio"),
-            'reservas': reservas
+            'reservas': reservas,
+            'fechahoraactual': datetime.now(),
+            'anchocol': 90/len(mesas)
         }
 
     return HttpResponse(template.render(context, request))

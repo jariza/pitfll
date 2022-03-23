@@ -10,6 +10,9 @@ class Equipo(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
     idequipo = models.IntegerField(unique=True)
 
+    class Meta:
+        unique_together = (('nombre', 'idequipo'),)
+
     def __str__(self):
         return "{} - {}".format(self.idequipo, self.nombre)
 
@@ -37,7 +40,7 @@ class Reserva(models.Model):
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = (('slot', 'mesa', 'equipo'),)
+        unique_together = (('slot', 'mesa'),)
 
     def __str__(self):
         return 'Equipo "{}" en la mesa {}, slot {}'.format(self.equipo, self.mesa, self.slot)
