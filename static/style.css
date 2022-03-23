@@ -6,3 +6,6 @@ p.error {
     border: 2px solid red;
     padding: 5px;
 }
+p.fechahorasrv {
+    font-size: 0.7em;
+}

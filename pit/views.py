@@ -17,14 +17,13 @@ class IndexView(generic.ListView):
             if i.slot.id not in reservas:
                 reservas[i.slot.id] = dict()
             reservas[i.slot.id][i.mesa.id] = i.equipo
-        print(Slot.objects.filter(horainicio__gte=datetime.now()).order_by("horainicio"))
-        print(datetime.now())
 
         return {
             'mesas': Mesa.objects.all().order_by("nombre"),
             'slots': Slot.objects.filter(horainicio__gte=datetime.now()).order_by("horainicio"),
             'equipos': Equipo.objects.all().order_by("idequipo"),
-            'salas': Sala.objects.all().order_by("nombre")
+            'salas': Sala.objects.all().order_by("nombre"),
+            'fechahoraservidor': datetime.now()
         }
 
 def horario(request, sala):

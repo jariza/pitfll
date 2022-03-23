@@ -40,5 +40,5 @@
     <li><a href="horario/{{ sala.id }}/">{{ sala.nombre }}</a></li>
 {% endfor %}
 </ul>
-
+<p class="fechahorasrv">Fecha y hora del servidor: {{ datos.fechahoraservidor|date:"G:i:s, j/n/Y" }}</p>
 {% endblock content %}
