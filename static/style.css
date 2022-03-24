@@ -1,14 +1,22 @@
+body.horario {
+    background-image: url("/static/fondo-horario.png");
+}
 h1.horariopit {
     text-align: center;
     font-family: Sans-Serif;
+    padding-left: 22%;
+    width: 75%;
+    margin-top: 12%;
+    font-size: 3em;
 }
 table.horariopit {
     border-collapse: collapse;
     border: 1px solid black;
+    background-color: white;
     font-family: Sans-Serif;
     text-align: center;
     width: 75%;
-    margin: auto;
+    margin-left: 22%;
 }
 table.horariopit td {
     border: 3px solid black;
@@ -33,4 +41,6 @@ p.error {
 }
 p.fechahorasrv {
     font-size: 0.7em;
+    position: fixed;
+    bottom: 0;
 }

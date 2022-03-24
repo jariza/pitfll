@@ -39,6 +39,7 @@ def horario(request, sala):
     slots = Slot.objects.all().order_by("horainicio")
 
     if salaobj.exists():
+        nombresala = salaobj.first().nombre
         reservaobj = Reserva.objects.filter(mesa__sala=salaobj.first())
         for i in reservaobj:
             if i.slot.id not in reservas:
@@ -46,15 +47,8 @@ def horario(request, sala):
             reservas[i.slot.id][i.mesa.id] = i.equipo
 
         mesas = Mesa.objects.filter(sala=salaobj.first()).order_by("nombre")
-
-        context = {
-            'mesas': Mesa.objects.filter(sala=salaobj.first()).order_by("nombre"),
-            'slots': Slot.objects.all().order_by("horainicio"),
-            'reservas': reservas,
-            'fechahoraactual': datetime.now(),
-            'anchocol': 90/len(mesas)
-        }
     else:
+        nombresala = 'PITs'
         reservaobj = Reserva.objects.all()
         for i in reservaobj:
             if i.slot.id not in reservas:
@@ -63,13 +57,14 @@ def horario(request, sala):
 
         mesas = Mesa.objects.all().order_by("nombre")
 
-        context = {
-            'mesas': mesas,
-            'slots': Slot.objects.all().order_by("horainicio"),
-            'reservas': reservas,
-            'fechahoraactual': datetime.now(),
-            'anchocol': 90/len(mesas)
-        }
+    context = {
+        'mesas': mesas,
+        'slots': Slot.objects.all().order_by("horainicio"),
+        'reservas': reservas,
+        'fechahoraactual': datetime.now(),
+        'anchocol': 90/len(mesas),
+        'nombresala': nombresala
+    }
 
     return HttpResponse(template.render(context, request))
 

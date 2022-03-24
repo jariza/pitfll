@@ -7,7 +7,7 @@
   {% block metas %}{% endblock %}
   {% block imports %}{% endblock %}
 </head>
-<body>
+<body{% block bodytags %}{% endblock %}>
 
 {% if user.is_authenticated or 'horario' in request.path %}
 {% if 'horario' not in request.path %}<p><a href="{% url 'logout' %}">Log Out</a></p>{% endif %}
