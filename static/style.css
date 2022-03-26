@@ -1,13 +1,22 @@
+#statuspanel {
+   display: none !important;
+
+}
 body.horario {
     background-image: url("/static/fondo-horario.png");
+    background-repeat: no-repeat;
+    width: 1024px;
+    height: 768px;
+    /* Estos es para evitar las barras de desplazamiento del navegador */
+    overflow: hidden;
 }
 h1.horariopit {
     text-align: center;
     font-family: Sans-Serif;
-    padding-left: 22%;
-    width: 75%;
-    margin-top: 12%;
-    font-size: 3em;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    font-size: 5em;
+    color: white;
 }
 table.horariopit {
     border-collapse: collapse;
@@ -15,12 +24,16 @@ table.horariopit {
     background-color: white;
     font-family: Sans-Serif;
     text-align: center;
-    width: 75%;
-    margin-left: 22%;
+    width: 90%;
+    margin: auto;
 }
 table.horariopit td {
     border: 3px solid black;
     padding: 1em;
+    height: 1em;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 15px;
 }
 table.horariopit td:first-child {
     width: 5em;
@@ -30,6 +43,9 @@ table.horariopit th {
     border: 3px solid black;
     background: black;
     color: white;
+    font-size: 2em;
+    font-weight: bold;
+
 }
 p.info {
     border: 2px solid blue;
@@ -43,4 +59,5 @@ p.fechahorasrv {
     font-size: 0.7em;
     position: fixed;
     bottom: 0;
+    margin: 0;
 }

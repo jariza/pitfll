@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -36,7 +36,9 @@ def horario(request, sala):
     # Reservas es (slot, mesa): equipo
     reservas = dict()
 
-    slots = Slot.objects.all().order_by("horainicio")
+    # Se muetran slots desde hace 5 minutos
+    # Se limita a 9 el máximo de registros a pintar
+    slots = Slot.objects.filter(horafin__gte=(datetime.now() - timedelta(minutes=5))).order_by("horainicio")[:9]
 
     if salaobj.exists():
         nombresala = salaobj.first().nombre
@@ -44,8 +46,7 @@ def horario(request, sala):
         for i in reservaobj:
             if i.slot.id not in reservas:
                 reservas[i.slot.id] = dict()
-            reservas[i.slot.id][i.mesa.id] = i.equipo
-
+            reservas[i.slot.id][i.mesa.id] = i.equipo.idequipo
         mesas = Mesa.objects.filter(sala=salaobj.first()).order_by("nombre")
     else:
         nombresala = 'PITs'
@@ -53,16 +54,16 @@ def horario(request, sala):
         for i in reservaobj:
             if i.slot.id not in reservas:
                 reservas[i.slot.id] = dict()
-            reservas[i.slot.id][i.mesa.id] = i.equipo
+            reservas[i.slot.id][i.mesa.id] = i.equipo.idequipo
 
         mesas = Mesa.objects.all().order_by("nombre")
 
     context = {
         'mesas': mesas,
-        'slots': Slot.objects.all().order_by("horainicio"),
+        'slots': slots,
         'reservas': reservas,
         'fechahoraactual': datetime.now(),
-        'anchocol': 90/len(mesas),
+        'anchocol': 75/len(mesas), #el 75 es porcentaje, la primera columna es 25 porque se establece en el html y el 75 porciento restante se reparte entre las demás
         'nombresala': nombresala
     }
 
