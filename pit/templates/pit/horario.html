@@ -16,7 +16,7 @@
 
 <h1 class="horariopit">Reservas {{ nombresala }}</h1>
 <table class="horariopit">
-    <tr><th style="width: 10%"></th>{% for mesa in mesas %}<th style="width: {{ anchocol }}%">{{ mesa.nombre }}</th>{% endfor %}</tr>
+    <tr><th style="width: 25%"></th>{% for mesa in mesas %}<th style="width: {{ anchocol }}%">{{ mesa.nombre }}</th>{% endfor %}</tr>
     {% for slot in slots %}
     <tr>
         <td style="width: 25%">{{ slot }}</td>
