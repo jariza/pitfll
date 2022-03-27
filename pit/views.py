@@ -27,18 +27,25 @@ class IndexView(generic.ListView):
             'fechahoraservidor': datetime.now()
         }
 
-@never_cache
-def horario(request, sala):
-    template = loader.get_template('pit/horario.html')
+# sala, sala a mostrar, 0 para todas
+# numslots, número de slots a mostrar, 0 para no limitar
+# direccion, 1 para mostrar el horario pasado (por defecto va hacia el futuro)
+def _tabla_horario_futuro(sala, numslots, pasado=0):
 
+    # Datos de DB necesarios
     salaobj = Sala.objects.filter(pk=sala)
+    # Se muetran slots desde hace 5 minutos
+    if pasado == 1:
+        slots = Slot.objects.filter(horafin__lte=datetime.now()).order_by("horainicio")
+    else:
+        slots = Slot.objects.filter(horafin__gte=(datetime.now() - timedelta(minutes=5))).order_by("horainicio")
 
     # Reservas es (slot, mesa): equipo
     reservas = dict()
 
-    # Se muetran slots desde hace 5 minutos
-    # Se limita a 9 el máximo de registros a pintar
-    slots = Slot.objects.filter(horafin__gte=(datetime.now() - timedelta(minutes=5))).order_by("horainicio")[:9]
+    # Limitar el número de slots que se muestrana las numslots primeros
+    if numslots > 0:
+        slots = slots[:numslots]
 
     if salaobj.exists():
         nombresala = salaobj.first().nombre
@@ -58,6 +65,15 @@ def horario(request, sala):
 
         mesas = Mesa.objects.all().order_by("nombre")
 
+    return mesas, slots, reservas, nombresala
+
+@never_cache
+def horario(request, sala):
+    template = loader.get_template('pit/horario.html')
+
+    # Se limita a 9 el máximo de registros a pintar
+    mesas, slots, reservas, nombresala =_tabla_horario_futuro(sala, 9)
+
     context = {
         'mesas': mesas,
         'slots': slots,
@@ -69,7 +85,41 @@ def horario(request, sala):
 
     return HttpResponse(template.render(context, request))
 
-def actualizarhorario(request):
+def horario_futuro_completo(request, sala):
+    template = loader.get_template('pit/horariofuturocompleto.html')
+
+    # No se limita el máximo de registros a pintar
+    mesas, slots, reservas, nombresala =_tabla_horario_futuro(sala, 0)
+
+    context = {
+        'mesas': mesas,
+        'slots': slots,
+        'reservas': reservas,
+        'fechahoraactual': datetime.now(),
+        'anchocol': str(75/len(mesas)).replace(',', '.'), #el 75 es porcentaje, la primera columna es 25 porque se establece en el html y el 75 porciento restante se reparte entre las demás
+        'nombresala': nombresala
+    }
+
+    return HttpResponse(template.render(context, request))
+
+def horario_pasado(request, sala):
+    template = loader.get_template('pit/horariopasado.html')
+
+    # No se limita el máximo de registros a pintar
+    mesas, slots, reservas, nombresala =_tabla_horario_futuro(sala, 0, 1)
+
+    context = {
+        'mesas': mesas,
+        'slots': slots,
+        'reservas': reservas,
+        'fechahoraactual': datetime.now(),
+        'anchocol': str(75/len(mesas)).replace(',', '.'), #el 75 es porcentaje, la primera columna es 25 porque se establece en el html y el 75 porciento restante se reparte entre las demás
+        'nombresala': nombresala
+    }
+
+    return HttpResponse(template.render(context, request))
+
+def actualizar_horario(request):
     if request.method == 'GET':
         return HttpResponse(status=405)
 
@@ -122,7 +172,7 @@ def actualizarhorario(request):
         else:
             return HttpResponse(template.render(context, request))
 
-def confirmarhorario(request):
+def confirmar_horario(request):
     if request.method == 'GET':
         return HttpResponse(status=405)
 

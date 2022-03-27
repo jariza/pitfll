@@ -9,8 +9,8 @@
 </head>
 <body{% block bodytags %}{% endblock %}>
 
-{% if user.is_authenticated or 'horario' in request.path %}
-{% if 'horario' not in request.path %}<p><a href="{% url 'logout' %}">Log Out</a></p>{% endif %}
+{% if user.is_authenticated or '/horario/' in request.path %}
+{% if '/horario/' not in request.path %}<p><a href="{% url 'logout' %}">Log Out</a></p>{% endif %}
 {% if messages %}
     {% for message in messages %}
     <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>

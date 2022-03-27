@@ -13,7 +13,7 @@
     <p><label for="mesa">Mesa</label>:<br />
         <select id="mesa" name="mesa">
         {% for mesa in datos.mesas %}
-        <option value="{{ mesa.id }}">{{ mesa.nombre }}</option>
+        <option value="{{ mesa.id }}">{{ mesa.nombre }} ({{ mesa.sala }})</option>
         {% endfor %}
     </select></p>
     <p><label for="slot">Slot</label>:<br />
@@ -32,6 +32,22 @@
     {% csrf_token %}
     <p><input type="submit" value="Actualizar"></p>
 </form>
+
+<p>Horarios completos:</p>
+<ul>
+    <li><a href="horariocompleto/0/">Todas las mesas</a></li>
+{% for sala in datos.salas %}
+    <li><a href="horariocompleto/{{ sala.id }}/">{{ sala.nombre }}</a></li>
+{% endfor %}
+</ul>
+
+<p>Reservas pasadas:</p>
+<ul>
+    <li><a href="horariopasado/0/">Todas las mesas</a></li>
+{% for sala in datos.salas %}
+    <li><a href="horariopasado/{{ sala.id }}/">{{ sala.nombre }}</a></li>
+{% endfor %}
+</ul>
 
 <p>Enlaces a horarios públicos:</p>
 <ul>

@@ -10,7 +10,7 @@ body.horario {
     /* Estos es para evitar las barras de desplazamiento del navegador */
     overflow: hidden;
 }
-h1.horariopit {
+h1.horariopublico {
     text-align: center;
     font-family: Sans-Serif;
     margin-top: 1%;
@@ -18,7 +18,7 @@ h1.horariopit {
     font-size: 5em;
     color: white;
 }
-table.horariopit {
+table.horariopublico {
     border-collapse: collapse;
     border: 1px solid black;
     background-color: white;
@@ -27,7 +27,7 @@ table.horariopit {
     width: 90%;
     margin: auto;
 }
-table.horariopit td {
+table.horariopublico td {
     border: 3px solid black;
     padding: 1em;
     height: 1em;
@@ -35,17 +35,16 @@ table.horariopit td {
     font-weight: bold;
     padding: 15px;
 }
-table.horariopit td:first-child {
+table.horariopublico td:first-child {
     width: 5em;
     text-align: right;
 }
-table.horariopit th {
+table.horariopublico th {
     border: 3px solid black;
     background: black;
     color: white;
     font-size: 2em;
     font-weight: bold;
-
 }
 p.info {
     border: 2px solid blue;
@@ -60,4 +59,16 @@ p.fechahorasrv {
     position: fixed;
     bottom: 0;
     margin: 0;
+}
+table.horariocompleto {
+    border-collapse: collapse;
+    border: 1px solid black;
+    font-family: Sans-Serif;
+}
+table.horariocompleto td {
+    border: 1px solid black;
+}
+table.horariopublico th {
+    border: 1px solid black;
+
 }
