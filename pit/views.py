@@ -63,7 +63,7 @@ def horario(request, sala):
         'slots': slots,
         'reservas': reservas,
         'fechahoraactual': datetime.now(),
-        'anchocol': 75/len(mesas), #el 75 es porcentaje, la primera columna es 25 porque se establece en el html y el 75 porciento restante se reparte entre las demás
+        'anchocol': str(75/len(mesas)).replace(',', '.'), #el 75 es porcentaje, la primera columna es 25 porque se establece en el html y el 75 porciento restante se reparte entre las demás
         'nombresala': nombresala
     }
 
