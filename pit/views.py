@@ -81,7 +81,7 @@ def horario(request, sala):
     template = loader.get_template('pit/horario.html')
 
     # Se limita a 9 el máximo de registros a pintar
-    mesas, slots, reservas, nombresala =_tabla_horario_futuro(sala, 9)
+    mesas, slots, reservas, nombresala = _tabla_horario_futuro(sala, 9)
 
     context = {
         'mesas': mesas,
@@ -197,7 +197,7 @@ def actualizar_horario(request):
 
             # Sala no preferida
             if pequipoobj.salapreferible.id != mesaobj.first().sala.id:
-                aviso_previo += ' Ojo: No se espera que el equipo reserve en esta sala, deberia reservar en {}.'.format(pequipoobj.salapreferible.nombre)
+                aviso_previo += ' OjO: No se espera que el equipo reserve en esta sala, deberia reservar en {}.'.format(pequipoobj.salapreferible.nombre)
 
             # Ya hay slot reservado
             reserva_futura = Reserva.objects.filter(equipo=equipo, slot__horainicio__gt=datetime.now())
@@ -210,6 +210,7 @@ def actualizar_horario(request):
                     mensaje = ''
                     messages.info(request, 'El slot {} de la mesa {} ya estaba asignado al equipo "{}", no hay que cambiar nada.'.format(slotobj.first(), mesaobj.first(), pequipoobj))
                 else:
+                    aviso_previo += ' OjO: Ya hay un equipo ocupando este slot'
                     mensaje = 'Slot {} de la mesa {} actualmente asignado al equipo "{}", se va a reasignar al equipo "{}"'.format(reserva_actual.first(), reserva_actual.first().mesa, reserva_actual.first().equipo, pequipoobj)
             else:
                 mensaje = 'Se va a asignar el slot {} de la mesa {} al equipo "{}"'.format(slotobj.first(), mesaobj.first(), pequipoobj)
