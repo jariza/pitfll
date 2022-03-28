@@ -182,6 +182,8 @@ def actualizar_horario(request):
         slotobj = Slot.objects.filter(pk=slot)
         reserva_actual = Reserva.objects.filter(mesa=mesa, slot=slot)
 
+        aviso_previo = ''
+
         # Liberar slot
         if equipo == -1:
             if reserva_actual.exists():
@@ -192,8 +194,6 @@ def actualizar_horario(request):
         # Asignar equipo
         else:
             pequipoobj = Equipo.objects.filter(pk=equipo).first()
-
-            aviso_previo = ''
 
             # Sala no preferida
             if pequipoobj.salapreferible.id != mesaobj.first().sala.id:
