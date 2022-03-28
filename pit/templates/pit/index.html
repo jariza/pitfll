@@ -49,12 +49,6 @@
 {% endfor %}
 </ul>
 
-<p>Enlaces a horarios públicos:</p>
-<ul>
-    <li><a href="horario/0/">Todas las mesas</a></li>
-{% for sala in datos.salas %}
-    <li><a href="horario/{{ sala.id }}/">{{ sala.nombre }}</a></li>
-{% endfor %}
-</ul>
+<p><a href="{% url 'pit:recursos' %}">Horarios públicos y recursos</a></p>
 <p class="fechahorasrv">Fecha y hora del servidor: {{ datos.fechahoraservidor|date:"G:i:s, j/n/Y" }}</p>
 {% endblock content %}

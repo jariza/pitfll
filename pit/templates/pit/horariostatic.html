@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load keyvalue %}
+
+{% block title %}PIT{% endblock %}
+
+{% block metas %}
+    <meta http-equiv="refresh" content="5">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+{% endblock metas %}
+
+{% block bodytags %} class="horariostatic"{% endblock %}
+
+{% block content %}
+
+<h1 class="horariopublico">Reservas {{ nombresala }}</h1>
+<p class="enlacesalas">Cambia de sala: <a href="/">Todas</a> {% for sala in salas %}<a href="{{ sala.nombre|cut:' ' }}.html">{{ sala.nombre }}</a>{% if not forloop.last %} {% endif %}{% endfor %}</p>
+<p class="avisopit">Los cambios de última hora puede que no estén incluídos en este horario, acude al PIT para ver la información más reciente.</p>
+<table class="horariopublico">
+    <tr><th style="width: 15%"></th>{% for mesa in mesas %}<th style="width: {{ anchocol }}%">{{ mesa.nombre }}</th>{% endfor %}</tr>
+    {% for slot in slots %}
+    <tr>
+        <td style="width: 15%">{{ slot }}</td>
+        {% for mesa in mesas %}<td style="width: {{ anchocol }}%">{{ reservas|keyvalue:slot.id|keyvalue:mesa.id }}</td>{% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+<p class="fechahorasrv">Actualizado a {{ fechahoraactual|date:"G:i:s, j/n/Y" }}</p>
+{% endblock content %}

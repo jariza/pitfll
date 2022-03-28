@@ -27,6 +27,15 @@ class IndexView(generic.ListView):
             'fechahoraservidor': datetime.now()
         }
 
+def recursos(request):
+    template = loader.get_template('pit/recursos.html')
+
+    context = {
+        'salas': Sala.objects.all().order_by("nombre")
+    }
+
+    return HttpResponse(template.render(context, request))
+
 # sala, sala a mostrar, 0 para todas
 # numslots, número de slots a mostrar, 0 para no limitar
 # direccion, 1 para mostrar el horario pasado (por defecto va hacia el futuro)
@@ -85,6 +94,43 @@ def horario(request, sala):
 
     return HttpResponse(template.render(context, request))
 
+@never_cache
+def horario_1080(request, sala):
+    template = loader.get_template('pit/horario1080.html')
+
+    # Se limita a 9 el máximo de registros a pintar
+    mesas, slots, reservas, nombresala =_tabla_horario_futuro(sala, 11)
+
+    context = {
+        'mesas': mesas,
+        'slots': slots,
+        'reservas': reservas,
+        'fechahoraactual': datetime.now(),
+        'anchocol': str(85/len(mesas)).replace(',', '.'), #el 85 es porcentaje, la primera columna es 15 porque se establece en el html y el 85 porciento restante se reparte entre las demás
+        'nombresala': nombresala
+    }
+
+    return HttpResponse(template.render(context, request))
+
+@never_cache
+def horario_static(request, sala):
+    template = loader.get_template('pit/horariostatic.html')
+
+    # Se limita a 9 el máximo de registros a pintar
+    mesas, slots, reservas, nombresala =_tabla_horario_futuro(sala, 0)
+
+    context = {
+        'mesas': mesas,
+        'slots': slots,
+        'reservas': reservas,
+        'fechahoraactual': datetime.now(),
+        'anchocol': str(85/len(mesas)).replace(',', '.'), #el 85 es porcentaje, la primera columna es 15 porque se establece en el html y el 85 porciento restante se reparte entre las demás
+        'nombresala': nombresala,
+        'salas': Sala.objects.all()
+    }
+
+    return HttpResponse(template.render(context, request))
+
 def horario_futuro_completo(request, sala):
     template = loader.get_template('pit/horariofuturocompleto.html')
 
@@ -124,47 +170,57 @@ def actualizar_horario(request):
         return HttpResponse(status=405)
 
     if request.method == 'POST':
+        # Comprobar y leer campos de entrada
         if not all(x in request.POST for x in ['mesa', 'slot', 'equipo']):
             messages.error(request, "Falta campo en el formulario")
-
         mesa = int(request.POST['mesa'])
         slot = int(request.POST['slot'])
         equipo = int(request.POST['equipo'])
 
+        # Obtener la info de base de datos
         mesaobj = Mesa.objects.filter(pk=mesa)
         slotobj = Slot.objects.filter(pk=slot)
         reserva_actual = Reserva.objects.filter(mesa=mesa, slot=slot)
 
+        # Liberar slot
         if equipo == -1:
             if reserva_actual.exists():
                 mensaje = 'Se va a liberar el slot {} de la mesa {}, actualmente asignado al equipo "{}".'.format(slotobj.first(), mesaobj.first(), reserva_actual.first().equipo)
             else:
                 mensaje = ''
                 messages.info(request, 'El slot {} de la mesa {} está libre actualmente, no hay nada que cambiar nada.'.format(slotobj.first(), mesaobj.first()))
+        # Asignar equipo
         else:
-            equipoobj = Equipo.objects.filter(pk=equipo)
+            pequipoobj = Equipo.objects.filter(pk=equipo).first()
 
+            aviso_previo = ''
+
+            # Sala no preferida
+            if pequipoobj.salapreferible.id != mesaobj.first().sala.id:
+                aviso_previo += ' Ojo: No se espera que el equipo reserve en esta sala, deberia reservar en {}.'.format(pequipoobj.salapreferible.nombre)
+
+            # Ya hay slot reservado
             reserva_futura = Reserva.objects.filter(equipo=equipo, slot__horainicio__gt=datetime.now())
             if reserva_futura.exists():
-                reserva_futura_txt = ' OjO: El equipo ya tiene reserva en el slot {} de la mesa {}.'.format(reserva_futura.first().slot, reserva_futura.first().mesa)
-            else:
-                reserva_futura_txt = ''
+                aviso_previo += ' OjO: El equipo ya tiene reserva en el slot {} de la mesa {}.'.format(reserva_futura.first().slot, reserva_futura.first().mesa)
 
+            # El slot ya estaba ocupado
             if reserva_actual.exists():
-                if equipoobj.first().id == reserva_actual.first().equipo.id:
+                if pequipoobj.id == reserva_actual.first().equipo.id:
                     mensaje = ''
-                    messages.info(request, 'El slot {} de la mesa {} ya estaba asignado al equipo "{}", no hay que cambiar nada.'.format(slotobj.first(), mesaobj.first(), equipoobj.first()))
+                    messages.info(request, 'El slot {} de la mesa {} ya estaba asignado al equipo "{}", no hay que cambiar nada.'.format(slotobj.first(), mesaobj.first(), pequipoobj))
                 else:
-                    mensaje = 'Slot {} de la mesa {} actualmente asignado al equipo "{}", se va a reasignar al equipo "{}".{}'.format(reserva_actual.first(), reserva_actual.first().mesa, reserva_actual.first().equipo, equipoobj.first(), reserva_futura_txt)
+                    mensaje = 'Slot {} de la mesa {} actualmente asignado al equipo "{}", se va a reasignar al equipo "{}"'.format(reserva_actual.first(), reserva_actual.first().mesa, reserva_actual.first().equipo, pequipoobj)
             else:
-                mensaje = 'Se va a asignar el slot {} de la mesa {} al equipo "{}".{}'.format(slotobj.first(), mesaobj.first(), equipoobj.first(), reserva_futura_txt)
+                mensaje = 'Se va a asignar el slot {} de la mesa {} al equipo "{}"'.format(slotobj.first(), mesaobj.first(), pequipoobj)
 
         template = loader.get_template('pit/actualizarhorario.html')
         context = {
             'mesa': mesa,
             'slot': slot,
             'equipo': equipo,
-            'mensaje': mensaje
+            'mensaje': mensaje,
+            'aviso_previo': aviso_previo
         }
         if mensaje == '':
             #Caso redundante, no hay nada que hacer

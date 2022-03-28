@@ -10,6 +10,20 @@ body.horario {
     /* Estos es para evitar las barras de desplazamiento del navegador */
     overflow: hidden;
 }
+body.horario1080 {
+    background-image: url("/static/fondo-1080.jpg");
+    background-repeat: no-repeat;
+    width: 1920px;
+    height: 1080px;
+    /* Estos es para evitar las barras de desplazamiento del navegador */
+    overflow: hidden;
+}
+body.horariostatic {
+    background-image: url("/static/fondo-1080.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* Estos es para evitar las barras de desplazamiento del navegador */
+}
 h1.horariopublico {
     text-align: center;
     font-family: Sans-Serif;
@@ -64,6 +78,7 @@ table.horariocompleto {
     border-collapse: collapse;
     border: 1px solid black;
     font-family: Sans-Serif;
+    text-align: center;
 }
 table.horariocompleto td {
     border: 1px solid black;
@@ -71,4 +86,27 @@ table.horariocompleto td {
 table.horariopublico th {
     border: 1px solid black;
 
+}
+p.enlacesalas {
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    font-size: 3em;
+    font-family: Sans-Serif;
+    margin: 0;
+    margin-bottom: 0.5em;
+}
+p.enlacesalas a {
+    color: white;
+}
+p.avisopit {
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    font-size: 1.2em;
+    font-family: Sans-Serif;
+    margin: auto;
+    margin-bottom: 0.5em;
+    background: white;
+    width: 90%;
 }

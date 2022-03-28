@@ -9,6 +9,7 @@ class Sala(models.Model):
 class Equipo(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
     idequipo = models.IntegerField(unique=True)
+    salapreferible = models.ForeignKey(Sala, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = (('nombre', 'idequipo'),)

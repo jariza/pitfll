@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load keyvalue %}
+
+{% block title %}PIT{% endblock %}
+
+{% block imports %}
+{% endblock imports %}
+
+{% block content %}
+
+<h1>Horarios públicos y recursos</h1>
+<p>Material para RaspberryPi:</p>
+<ul>
+    <li><a href="static/wallpaper.jpg">Fondo de escritorio</a></li>
+    <li><a href="https://support.mozilla.org/en-US/questions/1269565">Cómo quitar la caja de estado en Firefox</a></li>
+</ul>
+<p>Enlaces a horarios públicos:</p>
+<ul>
+    <li><a href="{% url 'pit:horario' sala=0 %}">Todas las mesas</a></li>
+{% for sala in salas %}
+    <li><a href="{% url 'pit:horario' sala=sala.id %}">{{ sala.nombre }}</a></li>
+{% endfor %}
+</ul>
+<p>Enlaces a horarios públicos 1920x1080:</p>
+<ul>
+    <li><a href="{% url 'pit:horario1080' sala=0 %}">Todas las mesas</a></li>
+{% for sala in salas %}
+    <li><a href="{% url 'pit:horario1080' sala=sala.id %}">{{ sala.nombre }}</a></li>
+{% endfor %}
+</ul>
+<p>Enlaces a horarios para web pública:</p>
+<ul>
+    <li><a href="{% url 'pit:horariostatic' sala=0 %}">Todas las mesas</a></li>
+{% for sala in salas %}
+    <li><a href="{% url 'pit:horariostatic' sala=sala.id %}">{{ sala.nombre }}</a></li>
+{% endfor %}
+</ul>
+
+<p><a href="{% url 'pit:index' %}">Volver atrás</a></p>
+{% endblock content %}
