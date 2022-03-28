@@ -15,7 +15,7 @@
 {% block content %}
 
 <h1 class="horariopublico">Reservas {{ nombresala }}</h1>
-<p class="enlacesalas">Cambia de sala: <a href="/">Todas</a> {% for sala in salas %}<a href="{{ sala.nombre|cut:' ' }}.html">{{ sala.nombre }}</a>{% if not forloop.last %} {% endif %}{% endfor %}</p>
+<p class="enlacesalas">Selecciona el PIT: <a href="/">Todos</a>, {% for sala in salas %}<a href="{{ sala.nombre|cut:' ' }}.html">{{ sala.nombre }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}.</p>
 <p class="avisopit">Los cambios de última hora puede que no estén incluídos en este horario, acude al PIT para ver la información más reciente.</p>
 <table class="horariopublico">
     <tr><th style="width: 15%"></th>{% for mesa in mesas %}<th style="width: {{ anchocol }}%">{{ mesa.nombre }}</th>{% endfor %}</tr>

@@ -65,7 +65,7 @@ def _tabla_horario_futuro(sala, numslots, pasado=0):
             reservas[i.slot.id][i.mesa.id] = i.equipo.idequipo
         mesas = Mesa.objects.filter(sala=salaobj.first()).order_by("nombre")
     else:
-        nombresala = 'PITs'
+        nombresala = 'PIT'
         reservaobj = Reserva.objects.all()
         for i in reservaobj:
             if i.slot.id not in reservas:

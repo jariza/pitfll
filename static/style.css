@@ -1,7 +1,3 @@
-#statuspanel {
-   display: none !important;
-
-}
 body.horario {
     background-image: url("/static/fondo-horario.png");
     background-repeat: no-repeat;
@@ -22,7 +18,6 @@ body.horariostatic {
     background-image: url("/static/fondo-1080.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    /* Estos es para evitar las barras de desplazamiento del navegador */
 }
 h1.horariopublico {
     text-align: center;
@@ -109,4 +104,25 @@ p.avisopit {
     margin-bottom: 0.5em;
     background: white;
     width: 90%;
+}
+@media only screen and (max-width: 1170px) {
+    body.horariostatic {
+        background-image: url("/static/fondo-1140.jpg");
+        background-position: center;
+        background-color: #4cb1b6;
+    }
+    h1.horariopublico {
+        font-size: 2em;
+    }
+    p.enlacesalas {
+        font-size: 1em;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+    table.horariopublico td {
+        font-size: 1.3em;
+    }
+    table.horariopublico th {
+        font-size: 1.3em;
+    }
 }
