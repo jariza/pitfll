@@ -200,7 +200,7 @@ def actualizar_horario(request):
                 aviso_previo += ' OjO: No se espera que el equipo reserve en esta sala, deberia reservar en {}.'.format(pequipoobj.salapreferible.nombre)
 
             # Ya hay slot reservado
-            reserva_futura = Reserva.objects.filter(equipo=equipo, slot__horainicio__gt=datetime.now())
+            reserva_futura = Reserva.objects.filter(equipo=equipo, slot__horainicio__gte=datetime.now())
             if reserva_futura.exists():
                 aviso_previo += ' OjO: El equipo ya tiene reserva en el slot {} de la mesa {}.'.format(reserva_futura.first().slot, reserva_futura.first().mesa)
 
@@ -244,6 +244,10 @@ def confirmar_horario(request):
         if equipo == -1:
             Reserva.objects.filter(mesa=Mesa.objects.get(pk=mesa), slot=Slot.objects.get(pk=slot)).delete()
         else:
-            Reserva(mesa=Mesa.objects.get(pk=mesa), slot=Slot.objects.get(pk=slot), equipo=Equipo.objects.get(pk=equipo)).save()
+            Reserva.objects.update_or_create(
+                mesa=Mesa.objects.get(pk=mesa),
+                slot=Slot.objects.get(pk=slot),
+                defaults={'equipo': Equipo.objects.get(pk=equipo)}
+            )
 
         return HttpResponseRedirect(reverse('pit:index'))

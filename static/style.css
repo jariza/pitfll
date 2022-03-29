@@ -107,8 +107,9 @@ p.avisopit {
 }
 @media only screen and (max-width: 1170px) {
     body.horariostatic {
-        background-image: url("/static/fondo-1140.jpg");
-        background-position: center;
+        /*background-image: url("/static/fondo-1140.jpg");
+        background-position: center;*/
+        background-image: none;
         background-color: #4cb1b6;
     }
     h1.horariopublico {
@@ -120,9 +121,13 @@ p.avisopit {
         margin-bottom: 0.5em;
     }
     table.horariopublico td {
-        font-size: 1.3em;
+        font-size: 1em;
+        padding: 5px;
     }
     table.horariopublico th {
-        font-size: 1.3em;
+        font-size: 1em;
+    }
+    p.avisopit {
+        font-size: 0.9em;
     }
 }
