@@ -43,11 +43,10 @@ def _tabla_horario_futuro(sala, numslots, pasado=0):
 
     # Datos de DB necesarios
     salaobj = Sala.objects.filter(pk=sala)
-    # Se muetran slots desde hace 5 minutos
     if pasado == 1:
         slots = Slot.objects.filter(horafin__lte=datetime.now()).order_by("horainicio")
     else:
-        slots = Slot.objects.filter(horafin__gte=(datetime.now() - timedelta(minutes=5))).order_by("horainicio")
+        slots = Slot.objects.filter(horafin__gte=datetime.now()).order_by("horainicio")
 
     # Reservas es (slot, mesa): equipo
     reservas = dict()
