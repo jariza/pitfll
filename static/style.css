@@ -112,22 +112,22 @@ p.avisopit {
         background-image: none;
         background-color: #4cb1b6;
     }
-    h1.horariopublico {
+    body.horariostatic h1.horariopublico {
         font-size: 2em;
     }
-    p.enlacesalas {
+    body.horariostatic p.enlacesalas {
         font-size: 1em;
         margin-top: 0.5em;
         margin-bottom: 0.5em;
     }
-    table.horariopublico td {
+    body.horariostatic table.horariopublico td {
         font-size: 1em;
         padding: 5px;
     }
-    table.horariopublico th {
+    body.horariostatic table.horariopublico th {
         font-size: 1em;
     }
-    p.avisopit {
+    body.horariostatic p.avisopit {
         font-size: 0.9em;
     }
 }
