@@ -21,7 +21,7 @@ class IndexView(generic.ListView):
 
         return {
             'mesas': Mesa.objects.all().order_by("nombre"),
-            'slots': Slot.objects.filter(horainicio__gte=datetime.now()).order_by("horainicio"),
+            'slots': Slot.objects.filter(horafin__gte=datetime.now()).order_by("horainicio"),
             'equipos': Equipo.objects.all().order_by("idequipo"),
             'salas': Sala.objects.all().order_by("nombre"),
             'fechahoraservidor': datetime.now()
