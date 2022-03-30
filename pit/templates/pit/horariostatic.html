@@ -4,7 +4,7 @@
 {% block title %}PIT{% endblock %}
 
 {% block metas %}
-    <meta http-equiv="refresh" content="30000000">
+    <meta http-equiv="refresh" content="30">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
@@ -28,5 +28,5 @@
     </tr>
     {% endfor %}
 </table>
-<p class="fechahorasrv">Actualizado a {{ fechahoraactual|date:"G:i:s, j/n/Y" }}</p>
+<p class="fechahorasrv">Actualizado a {{ fechahoraactual|date:"G:i:s, j/n/Y" }} - <a href="https://github.com/jariza/flldj">Source</a></p>
 {% endblock content %}
