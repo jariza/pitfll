@@ -94,6 +94,7 @@ p.enlacesalas {
     font-family: Sans-Serif;
     margin: 0;
     margin-bottom: 0.5em;
+    clear: both;
 }
 p.enlacesalas a {
     color: white;
@@ -109,10 +110,13 @@ p.avisopit {
     background: white;
     width: 90%;
 }
+img.logo {
+    float: right;
+    margin-bottom: 20px;
+    margin-right: 5%
+}
 @media only screen and (max-width: 1170px) {
     body.horariostatic {
-        /*background-image: url("/static/fondo-1140.jpg");
-        background-position: center;*/
         background-image: none;
         background-color: #4cb1b6;
     }
@@ -133,5 +137,20 @@ p.avisopit {
     }
     body.horariostatic p.avisopit {
         font-size: 0.9em;
+    }
+    h1.horariopublico {
+        float: left;
+        margin-top: 3%;
+        margin-left: 5%
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    img.logo {
+        width: 30%;
+        margin-top: 3%;
+    }
+    h1.horariopublico {
+        margin-top: 5%;
     }
 }
