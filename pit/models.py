@@ -45,3 +45,10 @@ class Reserva(models.Model):
 
     def __str__(self):
         return 'Equipo "{}" en la mesa {}, slot {}'.format(self.equipo, self.mesa, self.slot)
+
+class EnlacesExtra(models.Model):
+    enlace = models.URLField(max_length=200)
+    texto = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.texto

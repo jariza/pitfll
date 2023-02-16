@@ -9,30 +9,37 @@
 {% block content %}
 
 <h1>Horarios públicos y recursos</h1>
-<p>Material para RaspberryPi:</p>
+<p>Material extra:</p>
 <ul>
     <li><a href="/static/wallpaper.jpg">Fondo de escritorio</a></li>
     <li><a href="https://support.mozilla.org/en-US/questions/1269565">Cómo quitar la caja de estado en Firefox</a></li>
-    <li><a href="https://docs.google.com/spreadsheets/d/17wFfd4aGIfqJJ4laMPbJsXzuDMWNXq-3hFTMTvFAn_w/edit?usp=sharing">Sistema de contingencia para PIT 1</a></li>
-    <li><a href="https://docs.google.com/spreadsheets/d/1bHyBArQDqGJWTCFYiERN8-ir42o3T9II7CkxYORH4sA/edit?usp=sharing">Sistema de contingencia para PIT 2</a></li>
+{% for enlaceextra in enlacesextra %}
+    <li><a href="{{ enlaceextra.enlace }}">{{ enlaceextra.texto }}</a></li>
+{% endfor %}
 </ul>
 <p>Enlaces a horarios públicos:</p>
 <ul>
+{% if datos.salas|length > 1 %}
     <li><a href="{% url 'pit:horario' sala=0 %}">Todas las mesas</a></li>
+{% endif %}
 {% for sala in salas %}
     <li><a href="{% url 'pit:horario' sala=sala.id %}">{{ sala.nombre }}</a></li>
 {% endfor %}
 </ul>
 <p>Enlaces a horarios públicos 1920x1080:</p>
 <ul>
+{% if datos.salas|length > 1 %}
     <li><a href="{% url 'pit:horario1080' sala=0 %}">Todas las mesas</a></li>
+{% endif %}
 {% for sala in salas %}
     <li><a href="{% url 'pit:horario1080' sala=sala.id %}">{{ sala.nombre }}</a></li>
 {% endfor %}
 </ul>
 <p>Enlaces a horarios para web pública:</p>
 <ul>
+{% if datos.salas|length > 1 %}
     <li><a href="{% url 'pit:horariostatic' sala=0 %}">Todas las mesas</a></li>
+{% endif %}
 {% for sala in salas %}
     <li><a href="{% url 'pit:horariostatic' sala=sala.id %}">{{ sala.nombre }}</a></li>
 {% endfor %}

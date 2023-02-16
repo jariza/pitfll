@@ -5,7 +5,7 @@ from django.template import loader
 from django.urls import reverse
 from django.views import generic
 from django.views.decorators.cache import never_cache
-from .models import Equipo, Mesa, Slot, Reserva, Sala
+from .models import Equipo, Mesa, Slot, Reserva, Sala, EnlacesExtra
 
 class IndexView(generic.ListView):
     template_name = 'pit/index.html'
@@ -31,7 +31,8 @@ def recursos(request):
     template = loader.get_template('pit/recursos.html')
 
     context = {
-        'salas': Sala.objects.all().order_by("nombre")
+        'salas': Sala.objects.all().order_by("nombre"),
+        'enlacesextra': EnlacesExtra.objects.all().order_by("-texto")
     }
 
     return HttpResponse(template.render(context, request))
