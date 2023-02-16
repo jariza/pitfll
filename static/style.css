@@ -171,7 +171,10 @@ img.logo {
 	    margin-right: 0px;
     }
     h1.horariostatic {
-        margin-top: 1.5em;
+        margin-top: 1.em;
 	    margin-left: 0px;
+    }
+    table.horariopublico {
+        width: 90%;
     }
 }
