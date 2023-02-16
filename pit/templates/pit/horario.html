@@ -14,7 +14,7 @@
 
 {% block content %}
 
-<h1 class="horariopublico">Reservas {{ nombresala }}</h1>
+<h1 class="horario">Reservas {{ nombresala }}</h1>
 <table class="horariopublico">
     <tr><th style="width: 25%"></th>{% for mesa in mesas %}<th style="width: {{ anchocol }}%">{{ mesa.nombre }}</th>{% endfor %}</tr>
     {% for slot in slots %}

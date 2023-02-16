@@ -1,5 +1,5 @@
 body.horario {
-    background-image: url("/static/fondo-horario.png");
+    background-image: url("/static/fondo-horario.jpg");
     background-repeat: no-repeat;
     width: 1024px;
     height: 768px;
@@ -21,7 +21,25 @@ body.horario1080 {
 body.horariostatic {
     background-color: #42b1b6;
 }
-h1.horariopublico {
+h1.horario {
+    text-align: center;
+    font-family: Sans-Serif;
+    margin-top: 90px;
+    margin-left: 400px;
+    margin-bottom: 100px;
+    font-size: 5em;
+    color: white;
+}
+h1.horario1080 {
+    text-align: center;
+    font-family: Sans-Serif;
+    margin-top: 90px;
+    margin-left: 400px;
+    margin-bottom: 125px;
+    font-size: 5em;
+    color: white;
+}
+h1.horariostatic {
     text-align: center;
     font-family: Sans-Serif;
     margin-top: 1%;
@@ -35,7 +53,7 @@ table.horariopublico {
     background-color: white;
     font-family: Sans-Serif;
     text-align: center;
-    width: 90%;
+    width: 70%;
     margin: auto; 
 }
 table.horariopublico td {
@@ -106,6 +124,7 @@ p.avisopit {
     margin-bottom: 0.5em;
     background: white;
     width: 90%;
+    clear: both;
 }
 img.logo {
     margin-bottom: 20px;
@@ -118,9 +137,6 @@ img.logo {
 }
 }
 @media only screen and (max-width: 1000px) {
-    body.horariostatic h1.horariopublico {
-        font-size: 2em;
-    }
     body.horariostatic p.enlacesalas {
         font-size: 1em;
         margin-top: 0.5em;
@@ -136,14 +152,15 @@ img.logo {
     body.horariostatic p.avisopit {
         font-size: 0.9em;
     }
-    h1.horariopublico {
+    h1.horariostatic {
         float: left;
-        margin-top: 3%;
+        margin-top: 2em;
         margin-left: 5%;
+        font-size: 2em;
     }
     img.logo {
-	float: right;
-	margin-right: 5%;
+	    float: right;
+	    margin-right: 5%;
     }
 }
 
@@ -151,10 +168,10 @@ img.logo {
     img.logo {
         width: 30%;
         margin-top: 3%;
-	margin-right: 0px;
+	    margin-right: 0px;
     }
-    h1.horariopublico {
-        margin-top: 5%;
-	margin-left: 0px;
+    h1.horariostatic {
+        margin-top: 1.5em;
+	    margin-left: 0px;
     }
 }
