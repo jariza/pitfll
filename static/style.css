@@ -1,8 +1,8 @@
 body.horario {
     background-image: url("/static/fondo-horario.jpg");
     background-repeat: no-repeat;
-    width: 1024px;
-    height: 768px;
+    width: 1280px;
+    height: 800px;
     /* Estos es para evitar las barras de desplazamiento del navegador */
     overflow: hidden;
     margin-left: 0px;
@@ -24,9 +24,9 @@ body.horariostatic {
 h1.horario {
     text-align: center;
     font-family: Sans-Serif;
-    margin-top: 90px;
-    margin-left: 400px;
-    margin-bottom: 100px;
+    margin-top: 75px;
+    margin-left: 275px;
+    margin-bottom: 40px;
     font-size: 5em;
     color: white;
 }
