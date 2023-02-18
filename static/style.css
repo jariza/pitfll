@@ -2,7 +2,7 @@ body.horario {
     background-image: url("/static/fondo-horario.jpg");
     background-repeat: no-repeat;
     width: 1280px;
-    height: 800px;
+    height: 720px;
     /* Estos es para evitar las barras de desplazamiento del navegador */
     overflow: hidden;
     margin-left: 0px;
@@ -60,7 +60,7 @@ table.horariopublico td {
     border: 3px solid black;
     padding: 1em;
     height: 1em;
-    font-size: 2em;
+    font-size: 1em;
     font-weight: bold;
     padding: 0.4em;
 }
